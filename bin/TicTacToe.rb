@@ -5,10 +5,11 @@ class TicTacToe #(change name)
 
 	def before_show()
 		@button1 = "Hello World"
+	  @keys = ["None"] * 9
 	end	
 
-	def button1__clicked(*args)
-		@builder["button1"].label = @builder["button1"].label == "Hello World" ? "Goodbye World" : "Hello World"
+	def keys__clicked(button)
+		button.label = button.label == "None" ? "YES" : "None"
 	end
 
 end
