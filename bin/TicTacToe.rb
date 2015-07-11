@@ -1,5 +1,4 @@
-
-class TicTacToe #(change name)
+class TicTacToe
 
 	include GladeGUI
 	DEFAULT_VALUE = "None"
@@ -33,6 +32,22 @@ class TicTacToe #(change name)
 		if is_over?
 			@builder["window1"].title = "Game Over"
 		end
+	end
+
+	# Need to add logic
+	def valid_move?
+	end
+
+	# need to add logic
+	def tie?
+	end
+
+	# need to add logic
+	def game_over
+	end
+
+	# need to add logic
+	def reset_board
 	end
 
 	def is_over?
