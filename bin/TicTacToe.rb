@@ -2,12 +2,14 @@
 class TicTacToe #(change name)
 
 	include GladeGUI
+	DEFAULT_VALUE = "None"
+	PLAYER1 = "Player One"
+	PLAYER2 = "Player Two"
 
 	def before_show()
-		@default = "None"
 		@builder["window1"].title = "Tic Tac Toe"
-	  @keys = [@default] * 9
-		@builder["player_label"].label = "Default Value"
+	  @keys = [DEFAULT_VALUE] * 9
+		@builder["player_label"].label = PLAYER1
 		@buttons = [
 				@builder["TicTacToe.keys[0]"],
 				@builder["TicTacToe.keys[1]"],
@@ -23,7 +25,7 @@ class TicTacToe #(change name)
 
 	def keys__clicked(button)
 		button.label = button.label == "None" ? "YES" : "None"
-		@builder["player_label"].label = @builder["player_label"].label == "Player1"? "Player2" : "Player1"
+		@builder["player_label"].label = @builder["player_label"].label == PLAYER1 ? PLAYER2 : PLAYER2
 
 		#VR::msg "#{p button}"
 		#VR::msg "#{p @builder['TicTacToe.keys[0]'].label}"
@@ -57,7 +59,7 @@ class TicTacToe #(change name)
 						[case7, case8]
 		VR::msg "#{@buttons}"
 		cases.each do |items|
-			if items[0].label != @default
+			if items[0].label != DEFAULT_VALUE
 				if items[0].label == items[1].label && items[0].label == items[2].label
 					answer = true
 					return answer
