@@ -1,3 +1,10 @@
+##Notes
+# I think that if your opponent is a bot, then the
+# board should make the move for the bot.
+# This makes sense because the board knows the
+# the state of the board, whereas the bot
+# Knows nothing about the board.
+
 # Need to create a factory for Players
 def players_factory(player1, player2, player1_marker_x=true)
   players = []
@@ -37,10 +44,11 @@ def players_factory(player1, player2, player1_marker_x=true)
 end
 
 class Player
-	attr_reader :marker
+	attr_reader :marker :try_limit
 
-  def initialize(marker)
+  def initialize(marker, try_limit=3)
 		@marker = marker
+		@try_limit
 	end
 
 	def move
@@ -48,9 +56,11 @@ class Player
 	end
 end
 
+# Should remove class and add a bot boolean to the
+# Player class.
 class PlayerBot < Player
-	def initialize(marker)
-		super(marker)
+	def initialize(marker try_limit=3)
+		super(marker, try_limit)
 	end
 
 	# Need to add move Logic
