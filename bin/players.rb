@@ -44,7 +44,8 @@ def players_factory(player1, player2, player1_marker_x=true)
 end
 
 class Player
-	attr_reader :marker, :try_limit
+	attr_reader :marker
+	attr_accessor :try_limit
 
   def initialize(marker, try_limit=3)
 		@marker = marker
@@ -53,6 +54,10 @@ class Player
 
 	def move
 		@marker
+	end
+
+	def invald_move
+		@try_limit -=1
 	end
 end
 
