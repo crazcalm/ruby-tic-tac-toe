@@ -26,13 +26,19 @@ class TicTacToe
 	end	
 
 	def keys__clicked(button)
-		
-
+				
+		# game logic (High level)
 		if valid_move?(button) # Checks for valide move
 			button.label = button.label == "None" ? "YES" : "None"
 
 			if tie?
 				tie
+			elsif is_over?
+				game_over
+			else
+				next_player
+			end
+
 		else
 			try_again
 		end
@@ -52,12 +58,17 @@ class TicTacToe
 
 	# Need to add logic
 	def valid_move?(button)
-		result = button.label == DEFAULT_VALUE ? false : true
+		result = button.label == DEFAULT_VALUE ? true : false
 		result
 	end
 
 	def next_player
-		@builder["player_label"].label = @builder["player_label"].label == PLAYER1 ? PLAYER2
+		@builder["player_label"].label = @builder["player_label"].label == PLAYER1 ? PLAYER2 : PLAYER1
+	end
+
+	# The bot needs to be able to be able to move too!
+	# add logic
+	def bot_move
 	end
 
 	# need to add logic
@@ -65,7 +76,7 @@ class TicTacToe
 		result = true
 		
 		@buttons.each do |button|
-			result = true if button.label == DEFAULT_VALUE
+			result = false if button.label == DEFAULT_VALUE
 		end
 		
 		result
@@ -80,6 +91,7 @@ class TicTacToe
 	# need to add logic
 	def game_over
 		@builder["window1"].title = GAME_OVER
+		play_again?
 	end
 
 	# This method is needed to determine of the player would

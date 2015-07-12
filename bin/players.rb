@@ -44,7 +44,7 @@ def players_factory(player1, player2, player1_marker_x=true)
 end
 
 class Player
-	attr_reader :marker :try_limit
+	attr_reader :marker, :try_limit
 
   def initialize(marker, try_limit=3)
 		@marker = marker
@@ -59,7 +59,7 @@ end
 # Should remove class and add a bot boolean to the
 # Player class.
 class PlayerBot < Player
-	def initialize(marker try_limit=3)
+	def initialize(marker, try_limit=3)
 		super(marker, try_limit)
 	end
 
