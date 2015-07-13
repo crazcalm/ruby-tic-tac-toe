@@ -133,6 +133,10 @@ class TicTacToe
 		VR::msg "The winner is #{@builder['player_label'].label}!"
 	end
 
+	def file_quit_activate(menuitem, data=nil)
+		quit
+	end
+
 	def is_over?
 		
 		# What I am returning
