@@ -68,14 +68,11 @@ class TicTacToe
 	end
 
 	def next_player
-
 		if @builder['player_label'].label == @player1.name
 			@builder['player_label'].label = @player2.name
 		else
 			@builder['player_label'].label = @player1.name
 		end
-
-		VR::msg "Current player is #{@builder['player_label'].label}"
 	end
 
 	# The bot needs to be able to be able to move too!
@@ -110,7 +107,6 @@ class TicTacToe
 	# Need to learn "y/n" dialog box
 	def play_again?
 		VR::Dialog.ok_box("Would you like to play again") == true ? reset_board : quit
-		#VR::msg "Would you like to play again? " + test
 	end
 
 	# This method is needed for when invalid moves are made and
@@ -122,6 +118,7 @@ class TicTacToe
 
 	def quit
 		VR::msg "Qutting"
+		destroy_window
 	end
 
 	# need to add logic
