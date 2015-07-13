@@ -45,18 +45,19 @@ end
 
 class Player
 	attr_reader :marker
-	attr_accessor :try_limit
+	attr_accessor :try_limit, :name
 
-  def initialize(marker, try_limit=3)
+  def initialize(marker, try_limit=3, name="Player1")
 		@marker = marker
-		@try_limit
+		@try_limit = try_limit
+		@name = name
 	end
 
 	def move
 		@marker
 	end
 
-	def invald_move
+	def invalid_move
 		@try_limit -=1
 	end
 end

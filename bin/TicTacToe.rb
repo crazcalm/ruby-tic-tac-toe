@@ -1,3 +1,5 @@
+require File.join(File.dirname(__FILE__), 'players')
+
 class TicTacToe
 
 	include GladeGUI
@@ -9,9 +11,11 @@ class TicTacToe
 	GAME_OVER = "Game Over"
 
 	def before_show()
+		@player1 = Player.new("X", 3, "Player1")
+		@player2 = Player.new("O", 3, "Player2")
 		@builder["window1"].title = TITLE
 	  @keys = [DEFAULT_VALUE] * 9
-		@builder["player_label"].label = PLAYER1
+		@builder["player_label"].label = @player1.name
 		@buttons = [
 				@builder["TicTacToe.keys[0]"],
 				@builder["TicTacToe.keys[1]"],
@@ -29,7 +33,7 @@ class TicTacToe
 				
 		# game logic (High level)
 		if valid_move?(button) # Checks for valide move
-			button.label = button.label == "None" ? "YES" : "None"
+			make_move(button)
 
 			if tie?
 				tie
@@ -42,7 +46,7 @@ class TicTacToe
 		else
 			try_again
 		end
-		@builder["player_label"].label = @builder["player_label"].label == PLAYER1 ? PLAYER2 : PLAYER2
+		@builder["player_label"].label = @builder["player_label"].label == @player1.name ? @player2.name : @player1.name
 
 		#VR::msg "#{p button}"
 		#VR::msg "#{p @builder['TicTacToe.keys[0]'].label}"
@@ -52,6 +56,13 @@ class TicTacToe
 		end
 	end
 
+	def make_move(button)
+		button.label = current_player_mark
+	end
+
+	def current_player_mark
+		@builder["player_label"].label == @player1.name ? @player1.move : @player2.move
+	end
 	# I need to create bot move method...
 	def bot_move(player)
 	end
@@ -63,7 +74,7 @@ class TicTacToe
 	end
 
 	def next_player
-		@builder["player_label"].label = @builder["player_label"].label == PLAYER1 ? PLAYER2 : PLAYER1
+		@builder["player_label"].label = @builder["player_label"].label == @player1.name ? @player2.name : @player2.name
 	end
 
 	# The bot needs to be able to be able to move too!
