@@ -137,6 +137,14 @@ class TicTacToe
 		quit
 	end
 
+	def file_rules_activate(menuitem, data=nil)
+		VR::msg "Add game rules"
+	end
+
+	def file_about_activate(menuitem, data=nil)
+		VR::msg "Add an about Page"
+	end
+
 	def is_over?
 		
 		# What I am returning
