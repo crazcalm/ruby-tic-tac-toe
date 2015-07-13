@@ -4,7 +4,7 @@ class TicTacToe
 
 	include GladeGUI
 
-	DEFAULT_VALUE = "None"
+	DEFAULT_VALUE = " "
 	PLAYER1 = "Player One"
 	PLAYER2 = "Player Two"
 	TITLE = "Tic Tac Toe"
