@@ -38,6 +38,7 @@ class TicTacToe
 			if tie?
 				tie
 			elsif is_over?
+				winner_is
 				game_over
 			else
 				next_player
@@ -46,14 +47,11 @@ class TicTacToe
 		else
 			try_again
 		end
-		@builder["player_label"].label = @builder["player_label"].label == @player1.name ? @player2.name : @player1.name
 
-		#VR::msg "#{p button}"
-		#VR::msg "#{p @builder['TicTacToe.keys[0]'].label}"
-		#VR::msg "@buttons[0]: #{@buttons[0].label} "
-		if is_over?
-			game_over
-		end
+#		if is_over?
+#			winner_is
+#			game_over
+#		end
 	end
 
 	def make_move(button)
@@ -74,7 +72,14 @@ class TicTacToe
 	end
 
 	def next_player
-		@builder["player_label"].label = @builder["player_label"].label == @player1.name ? @player2.name : @player2.name
+
+		if @builder['player_label'].label == @player1.name
+			@builder['player_label'].label = @player2.name
+		else
+			@builder['player_label'].label = @player1.name
+		end
+
+		VR::msg "Current player is #{@builder['player_label'].label}"
 	end
 
 	# The bot needs to be able to be able to move too!
@@ -96,7 +101,6 @@ class TicTacToe
 	def tie
 		VR::msg "Game has ended in a tie!"
 		game_over
-		play_again?
 	end
 
 	# need to add logic
@@ -127,6 +131,10 @@ class TicTacToe
 		@builder["window1"].title = TITLE
 	end
 
+	def winner_is
+		VR::msg "The winner is #{@builder['player_label'].label}!"
+	end
+
 	def is_over?
 		
 		# What I am returning
@@ -149,7 +157,7 @@ class TicTacToe
 		cases = [case1, case2, case3] +
 					[case4, case5, case6] +
 						[case7, case8]
-		VR::msg "#{@buttons}"
+
 		cases.each do |items|
 			if items[0].label != DEFAULT_VALUE
 				if items[0].label == items[1].label && items[0].label == items[2].label
