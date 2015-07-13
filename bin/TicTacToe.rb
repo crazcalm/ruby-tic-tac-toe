@@ -47,11 +47,6 @@ class TicTacToe
 		else
 			try_again
 		end
-
-#		if is_over?
-#			winner_is
-#			game_over
-#		end
 	end
 
 	def make_move(button)
@@ -61,6 +56,7 @@ class TicTacToe
 	def current_player_mark
 		@builder["player_label"].label == @player1.name ? @player1.move : @player2.move
 	end
+
 	# I need to create bot move method...
 	def bot_move(player)
 	end
