@@ -35,11 +35,11 @@ class TicTacToe
 		if valid_move?(button) # Checks for valide move
 			make_move(button)
 
-			if tie?
-				tie
-			elsif is_over?
+			if is_over?
 				winner_is
 				game_over
+			elsif tie?
+				tie
 			else
 				next_player
 			end
@@ -109,7 +109,8 @@ class TicTacToe
 	# like to play again.
 	# Need to learn "y/n" dialog box
 	def play_again?
-		VR::msg "Would you like to play again?"
+		VR::Dialog.ok_box("Would you like to play again") == true ? reset_board : quit
+		#VR::msg "Would you like to play again? " + test
 	end
 
 	# This method is needed for when invalid moves are made and
@@ -117,6 +118,10 @@ class TicTacToe
 	# I should add a mistake limit...
 	def try_again
 		VR::msg "That was in invalide move!"		
+	end
+
+	def quit
+		VR::msg "Qutting"
 	end
 
 	# need to add logic
