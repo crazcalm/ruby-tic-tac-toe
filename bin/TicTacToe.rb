@@ -1,4 +1,5 @@
 require File.join(File.dirname(__FILE__), 'players')
+require File.join(File.dirname(__FILE__), 'stack')
 
 class TicTacToe
 
@@ -13,6 +14,7 @@ class TicTacToe
 	def before_show()
 		@player1 = Player.new("X", 3, "Player1")
 		@player2 = Player.new("O", 3, "Player2")
+		@stack = Stack.new
 		@builder["window1"].title = TITLE
 	  @keys = [DEFAULT_VALUE] * 9
 		@builder["player_label"].label = @player1.name
@@ -51,6 +53,18 @@ class TicTacToe
 
 	def make_move(button)
 		button.label = current_player_mark
+		@stack.push(button)
+	end
+
+	def file_undo_activate(menuitem, data=nil)
+		if @stack.empty?
+			VR::msg "Cannot undo move"
+		else
+			button = @stack.pop
+			button.label = DEFAULT_VALUE
+			next_player
+			VR::msg "Move has been undone"
+		end
 	end
 
 	def current_player_mark
