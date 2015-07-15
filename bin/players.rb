@@ -14,29 +14,29 @@ def players_factory(player1, player2, player1_marker_x=true)
 
 		# Case 1
 		if player1 == "human"
-			players << Player.new("X")
+			players << Player.new("X", "Player1", false)
 		else
-			players << PlayerBot.new("X")
+			players << Player.new("X", "Player1", true)
 		end
 
 		if player2 == "human"
-			players << Player.new("O")
+			players << Player.new("O", "Player2", false)
 		else
-			players << PlayerBot.new("O")
+			players << PlayerBot.new("O", "Player2", true)
 		end
 
 	else
 		# Case2
 		if player1 == "human"
-			players << Player.new("O")
+			players << Player.new("O", "Player1", false)
 		else
-			players << PlayerBot.new("O")
+			players << PlayerBot.new("O", "Player1", true)
 		end
 
 		if player2 == "human"
-			players << Player.new("X")
+			players << Player.new("X", "Player2", false)
 		else
-			players << PlayerBot.new("X")
+			players << PlayerBot.new("X", "Player2", true)
 		end
 	end
 
@@ -44,13 +44,14 @@ def players_factory(player1, player2, player1_marker_x=true)
 end
 
 class Player
-	attr_reader :marker
+	attr_reader :marker, :bot
 	attr_accessor :try_limit, :name
 
-  def initialize(marker, try_limit=3, name="Player1")
+  def initialize(marker, name="Player1", bot=false)
 		@marker = marker
 		@try_limit = try_limit
 		@name = name
+		@bot = bot
 	end
 
 	def move
@@ -59,17 +60,5 @@ class Player
 
 	def invalid_move
 		@try_limit -=1
-	end
-end
-
-# Should remove class and add a bot boolean to the
-# Player class.
-class PlayerBot < Player
-	def initialize(marker, try_limit=3)
-		super(marker, try_limit)
-	end
-
-	# Need to add move Logic
-	def move
 	end
 end
