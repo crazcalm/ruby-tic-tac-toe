@@ -71,8 +71,22 @@ class TicTacToe
 		@builder["player_label"].label == @player1.name ? @player1.move : @player2.move
 	end
 
+	def opponent_player_mark
+		@builder['player_label'].label == @player1.name ? @player2.move : @player1.move
+	end
+
 	# I need to create bot move method...
 	def bot_move(player)
+	end
+
+	def board_empty?
+		result = true
+		@buttons.each do |button|
+			unless button.label == DEFAULT_VALUE
+				result = false
+			end
+		end
+	result
 	end
 
 	# Need to add logic
@@ -89,9 +103,46 @@ class TicTacToe
 		end
 	end
 
+	def random_move(marker)
+		# add a valid move check!
+		@buttons[rand(9)].label == marker
+		# Add board empty logic here and act accordingly
+	end
+
+	def opponent_is_close_to_winning(marker)
+		result = false
+		
+		# Iterate through the cases and see if 2 of 3 are the marker
+	end
+
+	def stop_opponent_from_winning(opponent_marker, bot_marker)
+		# Iterate through the cases and and try to stop him/her from winning!
+	end
+
+	def can_i_win?(marker)
+		# The same as opponent_is_close_to_winning. Make one method for this logic
+	end
+
+	def play_winning_move(marker)
+		# The same as stop_opponent_from_winning. Make one method for this logic
+	end
+
 	# The bot needs to be able to be able to move too!
 	# add logic
 	def bot_move
+		opponent_mark = opponent_player_mark
+		bot_mark = current_player_mark
+
+		#case1: Board is empty
+		if board_empty?
+			randome_move(bot_mark)
+		elsif opponent_is_close_to_winning(opponent_mark) # opponent has two in a row
+			stop_opponent_from_winning
+		elsif can_i_win?
+			play_winning_move(bot_marker)
+		else
+			random_move(bot_mark)
+		end
 	end
 
 	# need to add logic
