@@ -111,7 +111,7 @@ class TicTacToe
 
 	def random_move
 		# options
-		numbers = (0..9).to_a
+		numbers = (0...9).to_a
 		rand_num = numbers.sample
 		
 		# Chooses a valid move
@@ -178,7 +178,7 @@ class TicTacToe
 		#case1: Board is empty
 		if board_empty?
 			VR::msg "Board is empty"
-			randome_move
+			random_move
 		elsif can_i_win?
 			VR::msg "Can I Win?"
 			winning_move
