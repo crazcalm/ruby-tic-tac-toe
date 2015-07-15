@@ -210,11 +210,7 @@ class TicTacToe
 		VR::msg "Add an about Page"
 	end
 
-	def is_over?
-		
-		# What I am returning
-		answer = false
-
+	def board_cases
 		# Horizontal cases
 		case1 = @buttons[0..2]
 		case2 = @buttons[3..5]
@@ -232,6 +228,16 @@ class TicTacToe
 		cases = [case1, case2, case3] +
 					[case4, case5, case6] +
 						[case7, case8]
+
+		cases
+	end
+
+	def is_over?
+		
+		# What I am returning
+		answer = false
+
+		cases = board_cases
 
 		cases.each do |items|
 			if items[0].label != DEFAULT_VALUE
