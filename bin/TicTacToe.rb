@@ -122,12 +122,21 @@ class TicTacToe
 		make_move(@buttons[rand_num])
 	end
 
+  def debug_cases(items)
+    state = ""
+    items.each {|button| state += "#{button}, "}
+    VR::msg "state"
+  end
+
 	def close_to_winning?(marker)
 		result = false		
 		cases = board_cases
 
 		cases.each do |items|
-			if items.count(marker) == 2 && items.count(DEFAULT_VALUE) == 1
+
+      testing = [items[0].label, items[1].label, items[2].label]
+      #debug_cases(testing)
+			if testing.count(marker) == 2 && testing.count(DEFAULT_VALUE) == 1
 				result = true
 				return result
 			end
@@ -144,10 +153,11 @@ class TicTacToe
 		cases = board_cases
 		marker = current_player_mark
 
-		cases.each do |items|
+		cases.each do |_items|
+      items = [_items[0].label, _items[1].label, _items[2].label]
 			if items.count(marker) == 2 && items.count(DEFAULT_VALUE) == 1
 				index = items.index(DEFAULT_VALUE)
-				make_move(items[index])
+				make_move(_items[index])
 			end
 		end
 	end
@@ -158,10 +168,11 @@ class TicTacToe
 		my_marker = current_player_mark
 		opponent_marker = opponent_player_mark
 
-		cases.each do |items|
+		cases.each do |_items|
+      items = [_items[0].label, _items[1].label, _items[2].label]
 			if items.count(opponent_marker) == 2 && items.count(DEFAULT_VALUE) == 1
 				index = items.index(DEFAULT_VALUE)
-				make_move(items[index])
+				make_move(_items[index])
 			end				 
 		end
 		
@@ -221,7 +232,6 @@ class TicTacToe
 
 	# This method is needed to determine of the player would
 	# like to play again.
-	# Need to learn "y/n" dialog box
 	def play_again?
 		play_again = VR::Dialog.ok_box("Would you like to play again")
 
