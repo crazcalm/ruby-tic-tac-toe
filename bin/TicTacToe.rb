@@ -103,45 +103,80 @@ class TicTacToe
 		end
 	end
 
-	def random_move(marker)
-		# add a valid move check!
-		@buttons[rand(9)].label == marker
-		# Add board empty logic here and act accordingly
-	end
-
-	def opponent_is_close_to_winning(marker)
-		result = false
+	def random_move
+		# options
+		numbers = (0..9).to_a
+		rand_num = numbers.sample
 		
-		# Iterate through the cases and see if 2 of 3 are the marker
+		# Chooses a valid move
+		while not valid_move?(@buttons[rand_num]) do 
+			rand_num = numbers.sample
+		end
+		make_move(@button[rand_num])
 	end
 
-	def stop_opponent_from_winning(opponent_marker, bot_marker)
+	def close_to_winning?(marker)
+		result = false		
+		cases = board_cases
+
+		cases.each do |items|
+			if items.count(marker) == 2 && items.count(DEFAULT_VALUE) == 1
+				result = true
+				break
+			end
+		end
+		result
+	end
+
+	def opponent_is_close_to_winning
+		opponent_marker = opponent_player_marker
+		close_to_winning?(opponent_marker)
+	end
+
+	def winning_move
+		cases = board_cases
+		marker = current_player_mark
+
+		cases.each do |items|
+			if items.count(marker) == 2 && items.count(DEFAULT_VALUE) == 1
+				index = items.index(DEFAULT_VALUE)
+				make_move(items[index])
+			end
+		end
+	end
+
+	def stop_opponent_from_winning
 		# Iterate through the cases and and try to stop him/her from winning!
+		cases = board_cases
+		my_marker = current_player_mark
+		opponent_marker = opponent_player_mark
+
+		cases.each do |items|
+			if items.count(opponent_marker) == 2 && items.count(DEFAULT_VALUE) == 1
+				index = items.index(DEFAULT_VALUE)
+				make_move(items[index])
+			end				 
+		end
+		
 	end
 
 	def can_i_win?(marker)
-		# The same as opponent_is_close_to_winning. Make one method for this logic
-	end
-
-	def play_winning_move(marker)
-		# The same as stop_opponent_from_winning. Make one method for this logic
+		my_marker = current+player_mark
+		close_to_winning?(my_marker)
 	end
 
 	# The bot needs to be able to be able to move too!
 	# add logic
 	def bot_move
-		opponent_mark = opponent_player_mark
-		bot_mark = current_player_mark
-
 		#case1: Board is empty
 		if board_empty?
-			randome_move(bot_mark)
-		elsif opponent_is_close_to_winning(opponent_mark) # opponent has two in a row
-			stop_opponent_from_winning
+			randome_move
 		elsif can_i_win?
-			play_winning_move(bot_marker)
+			winning_move
+		elsif opponent_is_close_to_winning # opponent has two in a row
+			stop_opponent_from_winning
 		else
-			random_move(bot_mark)
+			random_move
 		end
 	end
 
@@ -234,20 +269,20 @@ class TicTacToe
 
 	def is_over?
 		
-		# What I am returning
-		answer = false
+		# This gets returned
+		result = false
 
 		cases = board_cases
 
 		cases.each do |items|
 			if items[0].label != DEFAULT_VALUE
 				if items[0].label == items[1].label && items[0].label == items[2].label
-					answer = true
-					return answer
+					result = true
+					return result
 				end
 			end
 		end
-		answer
+		result
 	end
 
 end
