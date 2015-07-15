@@ -177,12 +177,16 @@ class TicTacToe
 	def bot_move
 		#case1: Board is empty
 		if board_empty?
+			VR::msg "Board is empty"
 			randome_move
 		elsif can_i_win?
+			VR::msg "Can I Win?"
 			winning_move
 		elsif opponent_is_close_to_winning # opponent has two in a row
+			VR::msg "MY Oppenent is close to winning"
 			stop_opponent_from_winning
 		else
+			VR::msg "The else case"
 			random_move
 		end
 	
@@ -215,7 +219,16 @@ class TicTacToe
 	# like to play again.
 	# Need to learn "y/n" dialog box
 	def play_again?
-		VR::Dialog.ok_box("Would you like to play again") == true ? reset_board : quit
+		play_again = VR::Dialog.ok_box("Would you like to play again")
+
+		if play_again
+			reset_board
+			if current_player_is_a_bot?
+				bot_move
+			end
+		else
+			quit
+ 		end
 	end
 
 	# This method is needed for when invalid moves are made and
