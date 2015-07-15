@@ -129,7 +129,7 @@ class TicTacToe
 		cases.each do |items|
 			if items.count(marker) == 2 && items.count(DEFAULT_VALUE) == 1
 				result = true
-				break
+				return result
 			end
 		end
 		result
@@ -175,6 +175,10 @@ class TicTacToe
 	# The bot needs to be able to be able to move too!
 	# add logic
 	def bot_move
+
+    # print board state
+    board_state
+
 		#case1: Board is empty
 		if board_empty?
 			VR::msg "Board is empty"
@@ -306,6 +310,19 @@ class TicTacToe
 		end
 		result
 	end
+
+  def board_state
+    state = ""
+    @buttons.each_with_index do |item, index|
+      if (index + 1) % 3 == 0
+        state += " #{item.label}\n"
+        state += "---------------\n"
+      else
+        state += " #{item.label} | "
+      end
+    end
+    VR::msg state
+  end
 
 end
 
