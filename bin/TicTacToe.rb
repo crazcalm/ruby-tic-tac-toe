@@ -12,8 +12,8 @@ class TicTacToe
 	GAME_OVER = "Game Over"
 
 	def before_show()
-		@player1 = Player.new("X", 3, "Player1")
-		@player2 = Player.new("O", 3, "Player2")
+		@player1 = Player.new("X", "Player1", false)
+		@player2 = Player.new("O", "Player2", true)
 		@stack = Stack.new
 		@builder["window1"].title = TITLE
 	  @keys = [DEFAULT_VALUE] * 9
@@ -36,18 +36,20 @@ class TicTacToe
 		# game logic (High level)
 		if valid_move?(button) # Checks for valide move
 			make_move(button)
-
-			if is_over?
-				winner_is
-				game_over
-			elsif tie?
-				tie
-			else
-				next_player
-			end
-
+			game_play_steps
 		else
 			try_again
+		end
+	end
+
+	def game_play_steps
+		if is_over?
+			winner_is
+			game_over
+		elsif tie?
+			tie
+		else
+			next_player
 		end
 	end
 
@@ -67,16 +69,16 @@ class TicTacToe
 		end
 	end
 
+	def current_player_is_a_bot?
+		@builder["player_label"].label == @player1.name ? @player1.bot : @player2.bot
+	end
+
 	def current_player_mark
 		@builder["player_label"].label == @player1.name ? @player1.move : @player2.move
 	end
 
 	def opponent_player_mark
 		@builder['player_label'].label == @player1.name ? @player2.move : @player1.move
-	end
-
-	# I need to create bot move method...
-	def bot_move(player)
 	end
 
 	def board_empty?
@@ -101,6 +103,10 @@ class TicTacToe
 		else
 			@builder['player_label'].label = @player1.name
 		end
+
+		if current_player_is_a_bot?
+			bot_move
+		end
 	end
 
 	def random_move
@@ -110,9 +116,10 @@ class TicTacToe
 		
 		# Chooses a valid move
 		while not valid_move?(@buttons[rand_num]) do 
+			VR::msg "Button #{@buttons[rand_num]} num: #{rand_num}"
 			rand_num = numbers.sample
 		end
-		make_move(@button[rand_num])
+		make_move(@buttons[rand_num])
 	end
 
 	def close_to_winning?(marker)
@@ -129,7 +136,7 @@ class TicTacToe
 	end
 
 	def opponent_is_close_to_winning
-		opponent_marker = opponent_player_marker
+		opponent_marker = opponent_player_mark
 		close_to_winning?(opponent_marker)
 	end
 
@@ -160,8 +167,8 @@ class TicTacToe
 		
 	end
 
-	def can_i_win?(marker)
-		my_marker = current+player_mark
+	def can_i_win?
+		my_marker = current_player_mark
 		close_to_winning?(my_marker)
 	end
 
@@ -178,6 +185,8 @@ class TicTacToe
 		else
 			random_move
 		end
+	
+		game_play_steps
 	end
 
 	# need to add logic
