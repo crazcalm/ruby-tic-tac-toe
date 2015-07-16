@@ -10,7 +10,7 @@ def players_factory(player1, player2, player1_marker_x=true)
   players = []
 
 	# Cases of initializing the players
-	if player1_marker
+	if player1_marker_x
 
 		# Case 1
 		if player1 == "human"
@@ -22,7 +22,7 @@ def players_factory(player1, player2, player1_marker_x=true)
 		if player2 == "human"
 			players << Player.new("O", "Player2", false)
 		else
-			players << PlayerBot.new("O", "Player2", true)
+			players << Player.new("O", "Player2", true)
 		end
 
 	else
@@ -30,13 +30,13 @@ def players_factory(player1, player2, player1_marker_x=true)
 		if player1 == "human"
 			players << Player.new("O", "Player1", false)
 		else
-			players << PlayerBot.new("O", "Player1", true)
+			players << Player.new("O", "Player1", true)
 		end
 
 		if player2 == "human"
 			players << Player.new("X", "Player2", false)
 		else
-			players << PlayerBot.new("X", "Player2", true)
+			players << Player.new("X", "Player2", true)
 		end
 	end
 

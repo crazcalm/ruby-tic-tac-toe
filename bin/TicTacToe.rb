@@ -18,7 +18,7 @@ class TicTacToe
 		@builder["window1"].title = TITLE
 	  @keys = [DEFAULT_VALUE] * 9
 		@builder["player_label"].label = @player1.name
-		@one_player_mode = false
+		@one_player_mode = true
 		@buttons = [
 				@builder["TicTacToe.keys[0]"],
 				@builder["TicTacToe.keys[1]"],
@@ -30,7 +30,25 @@ class TicTacToe
 				@builder["TicTacToe.keys[7]"],
 				@builder["TicTacToe.keys[8]"]
 				]
-	end	
+		
+		# Methods used to set up the game
+		set_game_mode
+		initialize_players
+	end
+
+	def set_game_mode
+		@one_player_mode = VR::Dialog.ok_box("'OK' == 1 player mode\n'Cancel' == 2 player mode")
+	end
+
+	def initialize_players
+		if @one_player_mode
+			@player1, @player2 = players_factory("human", "bot")
+		else
+			@player1, @player2 = players_factory("human", "human")
+		end
+		VR::msg "p #{@player1}\n p #{@player2}"
+		
+	end
 
 	def keys__clicked(button)
 				
@@ -72,10 +90,10 @@ class TicTacToe
 	def file_undo_activate(menuitem, data=nil)
 		if @one_player_mode
 			_undo
-			next_player
+			_undo
 		else
 			_undo
-			_undo
+			next_player
 		end
 	end
 
