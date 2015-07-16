@@ -46,8 +46,6 @@ class TicTacToe
 		else
 			@player1, @player2 = players_factory("human", "human")
 		end
-		VR::msg "p #{@player1}\n p #{@player2}"
-		
 	end
 
 	def keys__clicked(button)
@@ -79,11 +77,11 @@ class TicTacToe
 
 	def _undo
 		if @stack.empty?
-			VR::msg "Cannot undo move"
+			#VR::msg "Cannot undo move"
 		else
 			button = @stack.pop
 			button.label = DEFAULT_VALUE
-			VR::msg "Move has been undone"
+			#VR::msg "Move has been undone"
 		end
 	end
 
@@ -144,17 +142,11 @@ class TicTacToe
 		
 		# Chooses a valid move
 		while not valid_move?(@buttons[rand_num]) do 
-			VR::msg "Button #{@buttons[rand_num]} num: #{rand_num}"
+			#VR::msg "Button #{@buttons[rand_num]} num: #{rand_num}"
 			rand_num = numbers.sample
 		end
 		make_move(@buttons[rand_num])
 	end
-
-  def debug_cases(items)
-    state = ""
-    items.each {|button| state += "#{button}, "}
-    VR::msg "state"
-  end
 
 	def close_to_winning?(marker)
 		result = false		
@@ -163,7 +155,7 @@ class TicTacToe
 		cases.each do |items|
 
       testing = [items[0].label, items[1].label, items[2].label]
-      #debug_cases(testing)
+      
 			if testing.count(marker) == 2 && testing.count(DEFAULT_VALUE) == 1
 				result = true
 				return result
@@ -186,6 +178,7 @@ class TicTacToe
 			if items.count(marker) == 2 && items.count(DEFAULT_VALUE) == 1
 				index = items.index(DEFAULT_VALUE)
 				make_move(_items[index])
+				break
 			end
 		end
 	end
@@ -201,6 +194,7 @@ class TicTacToe
 			if items.count(opponent_marker) == 2 && items.count(DEFAULT_VALUE) == 1
 				index = items.index(DEFAULT_VALUE)
 				make_move(_items[index])
+				break
 			end				 
 		end
 		
@@ -216,20 +210,20 @@ class TicTacToe
 	def bot_move
 
     # print board state
-    board_state
+    #board_state
 
 		#case1: Board is empty
 		if board_empty?
-			VR::msg "Board is empty"
+			#VR::msg "Board is empty"
 			random_move
 		elsif can_i_win?
-			VR::msg "Can I Win?"
+			#VR::msg "Can I Win?"
 			winning_move
 		elsif opponent_is_close_to_winning # opponent has two in a row
-			VR::msg "MY Oppenent is close to winning"
+			#VR::msg "MY Oppenent is close to winning"
 			stop_opponent_from_winning
 		else
-			VR::msg "The else case"
+			#VR::msg "The else case"
 			random_move
 		end
 	
@@ -279,7 +273,7 @@ class TicTacToe
 	end
 
 	def quit
-		VR::msg "Qutting"
+		#VR::msg "Qutting"
 		destroy_window
 	end
 
