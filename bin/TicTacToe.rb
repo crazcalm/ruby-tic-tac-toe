@@ -9,7 +9,7 @@ class TicTacToe
 	PLAYER1 = "Player One"
 	PLAYER2 = "Player Two"
 	TITLE = "Tic Tac Toe"
-	GAME_OVER = "Game Over"
+	GAME_OVER = "Game Over"	
 
 	def before_show()
 		@player1 = Player.new("X", "Player1", false)
@@ -18,6 +18,7 @@ class TicTacToe
 		@builder["window1"].title = TITLE
 	  @keys = [DEFAULT_VALUE] * 9
 		@builder["player_label"].label = @player1.name
+		@one_player_mode = false
 		@buttons = [
 				@builder["TicTacToe.keys[0]"],
 				@builder["TicTacToe.keys[1]"],
@@ -58,14 +59,23 @@ class TicTacToe
 		@stack.push(button)
 	end
 
-	def file_undo_activate(menuitem, data=nil)
+	def _undo
 		if @stack.empty?
 			VR::msg "Cannot undo move"
 		else
 			button = @stack.pop
 			button.label = DEFAULT_VALUE
-			next_player
 			VR::msg "Move has been undone"
+		end
+	end
+
+	def file_undo_activate(menuitem, data=nil)
+		if @one_player_mode
+			_undo
+			next_player
+		else
+			_undo
+			_undo
 		end
 	end
 
@@ -208,7 +218,6 @@ class TicTacToe
 		game_play_steps
 	end
 
-	# need to add logic
 	def tie?
 		result = true
 		
@@ -224,7 +233,6 @@ class TicTacToe
 		game_over
 	end
 
-	# need to add logic
 	def game_over
 		@builder["window1"].title = GAME_OVER
 		play_again?
