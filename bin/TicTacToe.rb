@@ -40,6 +40,15 @@ class TicTacToe
 		@one_player_mode = VR::Dialog.ok_box("'OK' == 1 player mode\n'Cancel' == 2 player mode")
 	end
 
+	def file_select_mode_activate(menuitem, data=nil)
+		set_game_mode
+		reset_board
+		initialize_players
+		if current_player_is?(@player2)
+			next_player
+		end
+	end
+
 	def initialize_players
 		if @one_player_mode
 			@player1, @player2 = players_factory("human", "bot")
@@ -117,10 +126,13 @@ class TicTacToe
 	result
 	end
 
-	# Need to add logic
 	def valid_move?(button)
 		result = button.label == DEFAULT_VALUE ? true : false
 		result
+	end
+
+	def current_player_is?(player)
+		@builder['player_label'].label == player.name ? true : false
 	end
 
 	def next_player
@@ -205,12 +217,7 @@ class TicTacToe
 		close_to_winning?(my_marker)
 	end
 
-	# The bot needs to be able to be able to move too!
-	# add logic
 	def bot_move
-
-    # print board state
-    #board_state
 
 		#case1: Board is empty
 		if board_empty?
