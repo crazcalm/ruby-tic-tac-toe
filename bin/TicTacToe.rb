@@ -1,5 +1,6 @@
 require File.join(File.dirname(__FILE__), 'players')
 require File.join(File.dirname(__FILE__), 'stack')
+require File.join(File.dirname(__FILE__), 'about_page')
 
 class TicTacToe
 
@@ -306,6 +307,7 @@ class TicTacToe
 
 	def file_about_activate(menuitem, data=nil)
 		VR::msg "Add an about Page"
+		AboutPage.new.show()
 	end
 
 	def board_cases
