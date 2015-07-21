@@ -1,6 +1,5 @@
 require File.join(File.dirname(__FILE__), 'players')
 require File.join(File.dirname(__FILE__), 'stack')
-require File.join(File.dirname(__FILE__), 'about_page')
 
 class TicTacToe
 
@@ -10,7 +9,8 @@ class TicTacToe
 	PLAYER1 = "Player One"
 	PLAYER2 = "Player Two"
 	TITLE = "Tic Tac Toe"
-	GAME_OVER = "Game Over"	
+	GAME_OVER = "Game Over"
+  ABOUT_PAGE = "\t    Author: \tMarcus 'crazcalm' Willock\nSource Code:  https://github.com/crazcalm/ruby-tic-tac-toe"
 
 	def before_show()
 		@player1 = Player.new("X", "Player1", false)
@@ -101,7 +101,9 @@ class TicTacToe
 			_undo
 		else
 			_undo
-			next_player
+			unless @stack.empty?
+				next_player
+			end
 		end
 	end
 
@@ -301,13 +303,8 @@ class TicTacToe
 		quit
 	end
 
-	def file_rules_activate(menuitem, data=nil)
-		VR::msg "Add game rules"
-	end
-
 	def file_about_activate(menuitem, data=nil)
-		VR::msg "Add an about Page"
-		AboutPage.new.show()
+		VR::msg "#{ABOUT_PAGE}"
 	end
 
 	def board_cases
