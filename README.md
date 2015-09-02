@@ -16,15 +16,14 @@
     tool, I would have never attempted this project.
 
 ##VisualRuby
-	Website: 
-    Gem Page:
+	Website: http://visualruby.net/
+    Gem Page: https://rubygems.org/gems/visualruby/versions/1.0.16
 
 ##Requirementes
 	Ruby Version: 1.9.3
     
 ##Install
-	Gem name:
-    Gem Page:
+    Gem Page: https://rubygems.org/gems/ruby-tic-tac-toe-crazcalm
     
 ##Running the Game
 	After installing the gem, find the location of the
